@@ -1,0 +1,2 @@
+// lets viewers view and leave comments on latest news
+// use Mongoose and Cheerio to scrape news from another site

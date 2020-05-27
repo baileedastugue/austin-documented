@@ -1,0 +1,26 @@
+{
+  "name": "ncbi-documented",
+  "version": "1.0.0",
+  "description": "Scraping data from the NCBI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baileedastugue/NCBI-documented.git"
+  },
+  "author": "Bailee Dastugue",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baileedastugue/NCBI-documented/issues"
+  },
+  "homepage": "https://github.com/baileedastugue/NCBI-documented#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
+    "mongoose": "^5.9.16"
+  }
+}
