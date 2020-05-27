@@ -1,2 +1,45 @@
 // lets viewers view and leave comments on latest news
 // use Mongoose and Cheerio to scrape news from another site
+// set up an mLab provision - reote MongoDB database that Heroku supports natively
+    // create a heroku app in project directory
+    // `heroku addons:create mongolab`
+        ```js
+        // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+        var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+        mongoose.connect(MONGODB_URI);
+        ```
+    // whenever a user visits your site - the app should scrape stories from a news outlet and display them for the user
+        // each scraped article = should be saved to app database
+        // saved info includes: (MINIMUM)
+            // headline
+            // summary
+            // URL
+        // don't save duplicate articles
+    // leave comments on the articles + revisit those comments later
+        // comments should be saved in DB 
+        // comments should be associated with their article
+        // user should be allowed to delete comments left on articles
+
+
+Pages:
+    // Homepage
+        // scraped articles
+            // title
+            // summary
+            // URL
+            // source
+            // option to see article notes
+        // saved articles
+
+Where we begin:
+    // scrape and store data in mongooooose
+    // create mongooseDB for comments
+        // user name options for comments
+    // associate comments with scraped article data
+    // create HTML skeletons
+    // create HTML and API routes
+    // populate articles to HTML
+    // functional comments --> stores + associates correclty 
+    // populate comments to HTML
+    // add CSS + additional styling
