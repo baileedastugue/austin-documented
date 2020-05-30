@@ -33,10 +33,10 @@ Pages:
         // saved articles
 
 Where we begin:
-    // scrape and store data in mongooooose
+    // scrape and store data in mongooooose - done
     // create mongooseDB for comments
         // user name options for comments
-    // associate comments with scraped article data
+    // associate comments with scraped article data - done
     // create HTML skeletons
     // create HTML and API routes
     // populate articles to HTML
