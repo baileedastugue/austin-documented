@@ -1,6 +1,13 @@
 $blue: #5ba2d5;
 $lightcolor: #F7F7F9;
 
+span {
+    color: $blue;
+}
+span:hover {
+    color: black;
+}
+
 ul {
     // align-items: stretch; /* Default */
     justify-content: space-between;
@@ -18,7 +25,7 @@ li {
         border-bottom-color: black;
         border-width: 3px 0px;
         // border-top-width: 3px;;
-        
+      
         a {
             margin: 2vw;
             text-align: center;

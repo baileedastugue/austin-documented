@@ -1,39 +1,83 @@
 $(document).ready(() => {
     
-    $("a#scrape").on("click", function () {
-        console.log("attempting to redirect");
-        window.location.pathname = "/";
-        location.reload();
+    console.log(window.location.href);
+
+    $("a#scrape").on("click", function() {
+        console.log("hello");
+        console.log(window.location.href);
     })
 
-    $.getJSON("/articles", data => {
-        // console.log(data);
-        for (let i = 0; i < data.length; i++) {
+    var previous = null;
+    var current = null;
+    setInterval(function() {
+        $.getJSON("/articles", function(data) {
+            current = JSON.stringify(data);            
+            if (previous && current && previous !== current) {
+                console.log('refresh');
+                location.reload();
+            }
+            else {
+                event.preventDefault();
+                for (let i = 0; i < data.length; i++) {
             
-            var articleId = data[i]._id;
-            // console.log(articleId);
+                    var articleId = data[i]._id;
+                    // console.log(articleId);
+                   
+                    $("#articles ul").append(`
+                        <li>
+                            <div class="card article-card"> 
+                                    <a href="${data[i].link}" target="_blank">${data[i].title}</a>
+                                    <img src="${data[i].img}" class="img-thumbnail m-auto">
+                                <p class="card-text">
+                                    
+                                    ${data[i].summary} <br>
+                                    Source: ${data[i].source}<br>
+                                    <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">
+                                        Comment
+                                    </span> / 
+                                
+                                    <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
+                                    <div class="comments-container" data-id="${data[i]._id}"></div>
+                                </p>
+                            </div>
+                        </li>`);
+                    $(".comments-container").hide()
+                }
+            }
+            previous = current;
+             
+        });                       
+    }, 2000); 
+
+    // $.getJSON("/articles", data => {
+    //     console.log(data.length);
+    //     console.log(data);
+    //     for (let i = 0; i < data.length; i++) {
+            
+    //         var articleId = data[i]._id;
+    //         // console.log(articleId);
            
-            $("#articles ul").append(`
-                <li>
-                    <div class="card article-card"> 
-                            <a href="${data[i].link}" target="_blank">${data[i].title}</a>
-                            <img src="${data[i].img}" class="img-thumbnail m-auto">
-                        <p class="card-text">
+    //         $("#articles ul").append(`
+    //             <li>
+    //                 <div class="card article-card"> 
+    //                         <a href="${data[i].link}" target="_blank">${data[i].title}</a>
+    //                         <img src="${data[i].img}" class="img-thumbnail m-auto">
+    //                     <p class="card-text">
                             
-                            ${data[i].summary} <br>
-                            Source: ${data[i].source}<br>
-                            <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">
-                                Comment
-                            </span> / 
+    //                         ${data[i].summary} <br>
+    //                         Source: ${data[i].source}<br>
+    //                         <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">
+    //                             Comment
+    //                         </span> / 
                         
-                            <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
-                            <div class="comments-container" data-id="${data[i]._id}"></div>
-                        </p>
-                    </div>
-                </li>`);
-            $(".comments-container").hide()
-        }
-    })
+    //                         <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
+    //                         <div class="comments-container" data-id="${data[i]._id}"></div>
+    //                     </p>
+    //                 </div>
+    //             </li>`);
+    //         $(".comments-container").hide()
+    //     } 
+    // })
 
     $(document).on("click", "span.add-comment", function() {
         var articleId = $(this).attr("data-id");

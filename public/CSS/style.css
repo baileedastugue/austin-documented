@@ -1,3 +1,11 @@
+span {
+  color: #5ba2d5;
+}
+
+span:hover {
+  color: black;
+}
+
 ul {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;

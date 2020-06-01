@@ -36,8 +36,11 @@ module.exports = function(app) {
                     })
                 })
             }
+        }).then(function () {
+        return res.redirect('/');
+
         })
-        
+        // res.send("scraped");
     })
     
     
