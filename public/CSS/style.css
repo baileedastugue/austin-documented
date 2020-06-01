@@ -1,0 +1,11 @@
+.desc {
+  max-height: 50px;
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.desc.expand {
+  max-height: 250px;
+}
+/*# sourceMappingURL=style.css.map */

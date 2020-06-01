@@ -1,0 +1,12 @@
+
+
+.desc {
+    max-height: 50px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.desc.expand {
+    max-height: 250px;
+}
+
