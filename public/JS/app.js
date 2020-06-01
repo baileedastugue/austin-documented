@@ -109,6 +109,7 @@ $(document).ready(() => {
         if ($(this).attr("state") === "hidden") {
             $(this).attr("state", "shown");
             $(thisContainer).show();
+            $(thisContainer).empty();
             // $(thisContainer).css("display", "block");
             $(this).text("Hide Comments");
             $.ajax({
@@ -118,7 +119,14 @@ $(document).ready(() => {
                 console.log(thisContainer);
                 for (let i = 0; i < data[0].comment.length; i++) {
                     let commentArray = data[0].comment;
-                    $(thisContainer).append(commentArray[i].body);
+                    
+                    $(thisContainer).append(`<div class="card"> 
+                        <div class="card-body">
+                            <div class="card-text">
+                                ${commentArray[i].body}
+                            </div>
+                        </div>    
+                    </div>`)
                     console.log(commentArray[i].body);
                 }
             })
@@ -127,7 +135,7 @@ $(document).ready(() => {
             $(this).attr("state", "hidden");
             console.log("hiding comments");
             $(this).text("View Comments");
-            $(".comments-container").hide();
+            $(thisContainer).hide();
         }
     })
 
