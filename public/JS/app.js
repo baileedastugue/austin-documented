@@ -4,39 +4,29 @@ $(document).ready(() => {
 
     $.getJSON("/articles", data => {
         // console.log(data);
-        
         for (let i = 0; i < data.length; i++) {
             
             var articleId = data[i]._id;
             // console.log(articleId);
            
-            $("#articles").append(`
-                <div style="display: inline-flex;" class="card w-25" > 
-                <div class="card-header">
-                    <a href="${data[i].link}" target="_blank">${data[i].title}</a>
-                </div>
-                <p class="card-text">
-                    <img src="${data[i].img}" class="img-thumbnail rounded">
-                    ${data[i].summary} <br>
-                    Source: ${data[i].source}<br>
-                    <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">Comment</span> / 
-                
-                    <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
-                    <div class="comments-container" data-id="${data[i]._id}"></div>
-                </p>
-            </div>`);
+            $("#articles ul").append(`
+                <li>
+                    <div" class="card article-card"> 
+                      
+                            <a href="${data[i].link}" target="_blank">${data[i].title}</a>
+                            <img src="${data[i].img}" class="img-thumbnail">
+                        <p class="card-text">
+                            
+                            ${data[i].summary} <br>
+                            Source: ${data[i].source}<br>
+                            <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">Comment</span> / 
+                        
+                            <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
+                            <div class="comments-container" data-id="${data[i]._id}"></div>
+                        </p>
+                    </div>
+                </li>`);
             $(".comments-container").hide()
-            // $.ajax({
-            //     method: "GET",
-            //     url: "/articles/" + articleId
-            // }).then(comments => {
-            //     for (let i = 0; i < comments[0].comment.length; i++) {
-            //         let commentArray = comments[0].comment;
-            //         $(".comments-container").append(commentArray[i].body);
-            //         console.log(commentArray[i].body);
-            //     }
-            // })
-            // console.log("hi from line 39");
         }
     })
 

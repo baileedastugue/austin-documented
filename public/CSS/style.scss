@@ -1,3 +1,27 @@
+ul {
+    // align-items: stretch; /* Default */
+    justify-content: space-between;
+    width: 100%;
+    // background: #cacaca;
+    margin: auto;
+    // padding: 0;
+}
+li {
+    .article-card {
+        width: 31%;
+        display: inline-flex;
+        margin: 0.5vw;
+        height: 33vw;
+        overflow: auto; 
+        // img {
+        //     height: 10%;
+        // }
+         
+       
+    }
+    display: inline;
+    list-style-type: none;
+}
 
 
 .desc {

@@ -1,3 +1,26 @@
+ul {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  margin: auto;
+}
+
+li {
+  display: inline;
+  list-style-type: none;
+}
+
+li .article-card {
+  width: 31%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin: 0.5vw;
+  height: 33vw;
+  overflow: auto;
+}
+
 .desc {
   max-height: 50px;
   overflow: hidden;
