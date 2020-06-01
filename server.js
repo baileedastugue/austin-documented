@@ -29,14 +29,14 @@ app.get("/scrape", (req, res) => {
     let linkArray = [];
     axios.get("https://austin.eater.com/").then(response => {
         let $ = cheerio.load(response.data);
-        $("div .c-entry-box--compact--article").each(function(i, element) {
+        $("h2.c-entry-box--compact__title").each(function(i, element) {
             let link = $(this)
-                .children("div").children("h2").children("a")
+                .children("a")
                 .attr("href");
             linkArray.push(link);
         });
 
-        for (let i = 0; i < linkArray.length; i++) {
+        for (let i = 0; i < linkArray.length -1 ; i++) {
             axios.get(String(linkArray[i])).then(response => {
                 let result = {};
                 result.link = linkArray[i];
@@ -49,16 +49,16 @@ app.get("/scrape", (req, res) => {
                 // console.log(time);
 
                 db.Article.create(result)
-                .then(dbArticles => {
-                console.log(dbArticles);
-                // console.log("articles scraped");
+                .then(dbArticle => {
+                // console.log(dbArticle);
+                console.log("articles scraped");
                 })
                 .catch(err => {
                     console.log(err);
                 })
             })
         }
-        console.log(linkArray);
+        // console.log(linkArray);
     })
     res.send("howdy");
 })
@@ -66,9 +66,10 @@ app.get("/scrape", (req, res) => {
 
 app.get("/articles", (req, res) => {
     db.Article.find().sort({ time: -1})
-        .then(dbArticles => {
-            res.json(dbArticles);
-            console.log(dbArticles);
+        .populate("Article")
+        .then(dbArticle => {
+            res.json(dbArticle);
+            // console.log(dbArticle);
         })
         .catch((err) => {
             res.json(err);
@@ -77,11 +78,13 @@ app.get("/articles", (req, res) => {
 
 // grabs article by its id
 app.get("/articles/:id", (req, res) => {
-    db.Article.findOne({_id: req.params.id})
+    db.Article.find({
+        _id: req.params.id
+    })
         // populates all the comments associated with it
-        .populate("comment")
-        .then(dbArticles => {
-            res.json(dbArticles);
+        .populate("Comment")
+        .then(function(dbArticle) {
+            res.json(dbArticle);
         })
         .catch(err => {
             res.json(err);
@@ -89,37 +92,82 @@ app.get("/articles/:id", (req, res) => {
 })
 
 // saves and updates an article's assoc comment
-app.post("/articles/:id", (req, res) => {
-    console.log(req.body); // req.body = { body: "hello" }
-    console.log(req.params);
-    // creates a new note, data passed through req.body
+app.post("/articles/:id", function(req, res) {
+    // Create a new Note in the db
     db.Comment.create(req.body)
-        .then(dbComments => {
-            console.log(dbComments);
-            console.log(dbComments._id);
-            // id matches req.params.id
-            // {new:true} updates the article
-            return db.Article.findOneAndUpdate(
-                { _id: req.params.id },
-                // { comment: {
-                //     // dbComments._id,
-                //     body: req.body.body
-                //   }
-                // },
-                {$push: {comment: JSON.stringify(dbComments._id)}},
-                { new: true}
-            );
-        })
-        .then(dbArticles => {
-            console.log("Below's console log is line 114");
-            console.log(dbArticles);
-            res.json(dbArticles);
-        })
-        .catch(err => {
-            res.json(err);
-        })
+      .then(function(dbComments) {
+        return db.Article.findOneAndUpdate({
+            _id: req.params.id
+        }, { $push: { comment: dbComments._id } }, { new: true });
+      })
+      .then(function(dbArticle) {
+        // If the User was updated successfully, send it back to the client
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        // If an error occurs, send it back to the client
+        res.json(err);
+      });
+  });
+
+// returns all comments
+app.get("/comments", function (req, res) {
+    db.Comment.find({})
+    .then(function(dbComments) {
+        res.json(dbComments);
+    })
+    .catch(function(err) {
+        res.json(err);
+    })
 })
 
 app.listen(PORT, () => {
     console.log("App running on localhost:" + PORT);
 })
+
+// app.post("/articles/:id", function(req, res) {
+    //     db.Comment.insert({
+    //         // title: title,
+    //         body: body
+    //       });
+    //       db.Comment.find({_id: req.params.id})
+    //         .populate("Comment")
+    //         .then(function(dbArticle) {
+    //           res.json(dbArticle);
+    //         })
+    //         .catch(function(err) {
+    //           res.json(err);
+    //         })
+            
+    // })
+    // db.Comment.insert({
+    //     // title: title,
+    //     body: body
+    //   });
+    //   db.Comment.find({_id: req.params.id})
+    //     .populate("comment")
+    //     .then(function(dbArticle) {
+    //       res.json(dbArticle);
+    //     })
+    //     .catch(function(err) {
+    //       res.json(err);
+    //     })
+
+    // creates a new note, data passed through req.body
+    // db.Comment.create(req.body)
+    //     .then(function(dbComments) {
+    //         return db.Article.findOneAndUpdate(
+    //             // { _id: },
+    //             {},
+    //             { $push: { comment: dbComments._id}},
+    //             { new: true}
+    //         );
+    //     })
+    //     .then(dbArticles => {
+    //         console.log("Below's console log is line 114");
+    //         console.log(dbArticles);
+    //         res.json(dbArticles);
+    //     })
+    //     .catch(err => {
+    //         res.json(err);
+    //     })

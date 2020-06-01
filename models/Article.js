@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var ArticleSchema = new Schema ({
     title: {
         type: String,
-        // required: true
+        required: true
     },
     link: {
         type: String,
@@ -16,7 +16,7 @@ var ArticleSchema = new Schema ({
     },
     summary: {
         type: String,
-        // required: true
+        required: true
     },
     time: {
         type: Date

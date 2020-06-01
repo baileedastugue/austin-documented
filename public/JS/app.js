@@ -26,21 +26,21 @@ $(document).ready(() => {
             method: "GET",
             url: "/articles/" + articleId
         }).then(data => {
+            console.log(data);
             $('#myModal').modal('show');
             $(".modal-title").empty();
-            $(".modal-title").append(`<p>${data.title}</p>`);
+            $(".modal-title").append(`<p>${data[0].title}</p>`);
             $("div.modal-body").empty();
             $("div.modal-body").append(`<h6>Comment:</h6><br>
-                <textarea id="bodyinput" name="body"></textarea>`);
-            $(".submit-btn").attr("data-id", data._id);
+                    <textarea id="bodyinput" name="body"></textarea>`
+                );
+            $(".submit-btn").attr("data-id", data[0]._id);
 
         })
     })
 
     $(document).on("click", ".submit-btn", function() {
         var articleId = $(this).attr("data-id");
-        console.log(articleId);
-        console.log($("#bodyinput").val())
         $.ajax({
             method: "POST",
             url: "/articles/" + articleId,
@@ -55,6 +55,5 @@ $(document).ready(() => {
         });
         $('#myModal').modal("hide");
         $("textarea #bodyinput").val("");
-
     })
 })
