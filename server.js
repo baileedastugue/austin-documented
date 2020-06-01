@@ -23,7 +23,10 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/austin-documented", {useNewUrlParser: true});
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/austin-documented";
+
+mongoose.connect(MONGODB_URI);
+
 
 app.get("/scrape", (req, res) => {
     let linkArray = [];
