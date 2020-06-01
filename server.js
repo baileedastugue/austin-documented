@@ -82,7 +82,7 @@ app.get("/articles/:id", (req, res) => {
         _id: req.params.id
     })
         // populates all the comments associated with it
-        .populate("Comment")
+        .populate("comment")
         .then(function(dbArticle) {
             res.json(dbArticle);
         })

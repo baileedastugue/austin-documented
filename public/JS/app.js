@@ -41,6 +41,7 @@ $(document).ready(() => {
 
     $(document).on("click", ".submit-btn", function() {
         var articleId = $(this).attr("data-id");
+        console.log("you tired bitch")
         $.ajax({
             method: "POST",
             url: "/articles/" + articleId,
@@ -49,11 +50,15 @@ $(document).ready(() => {
             }
         })
         .then(data => {
-            console.log("data from line 51!!");
             console.log(data);
+        //     console.log("data from line 51!!");
+        //     console.log(data);
 
-        });
+        // });
         $('#myModal').modal("hide");
-        $("textarea #bodyinput").val("");
+        // $("textarea #bodyinput").val("");
+        })
     })
+
+
 })
