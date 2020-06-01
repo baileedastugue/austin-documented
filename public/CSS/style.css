@@ -21,6 +21,11 @@ li .article-card {
   overflow: auto;
 }
 
+#myModal textarea {
+  width: 100%;
+  min-height: 2.8vw;
+}
+
 .desc {
   max-height: 50px;
   overflow: hidden;

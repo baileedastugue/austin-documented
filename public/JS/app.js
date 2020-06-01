@@ -19,7 +19,9 @@ $(document).ready(() => {
                             
                             ${data[i].summary} <br>
                             Source: ${data[i].source}<br>
-                            <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">Comment</span> / 
+                            <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">
+                                Comment
+                            </span> / 
                         
                             <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
                             <div class="comments-container" data-id="${data[i]._id}"></div>
@@ -42,8 +44,13 @@ $(document).ready(() => {
             $(".modal-title").empty();
             $(".modal-title").append(`<p>${data[0].title}</p>`);
             $("div.modal-body").empty();
-            $("div.modal-body").append(`<h6>Comment:</h6><br>
-                    <textarea id="bodyinput" name="body"></textarea>`
+            $("div.modal-body").append(`
+            
+                <form>
+                    <textarea id="bodyinput" name="body" placeholder="Add a comment" ></textarea>
+                    
+                    <button type="submit" class="btn submit-btn btn-primary">Post</button>
+                </form>`
                 );
             $("div.modal-footer").empty();
             $("div.modal-footer").append(`
@@ -53,7 +60,7 @@ $(document).ready(() => {
                 <div class="view-container" data-id="${data[0]._id}"></div>
                 `)
                 
-            $("div.modal-body").append(`<button type="submit" class="btn submit-btn btn-primary">Post</button>`);
+            $("div.modal-body").append(``);
         
             $(".submit-btn").attr("data-id", data[0]._id);
 

@@ -13,16 +13,17 @@ li {
         margin: 0.5vw;
         height: 33vw;
         overflow: auto; 
-        // img {
-        //     height: 10%;
-        // }
-         
-       
     }
     display: inline;
     list-style-type: none;
 }
 
+#myModal {
+    textarea {
+        width: 100%;
+        min-height: 2.8vw;
+    }
+}
 
 .desc {
     max-height: 50px;
