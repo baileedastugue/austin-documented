@@ -1,6 +1,10 @@
 $(document).ready(() => {
     
-
+    $("a#scrape").on("click", function () {
+        console.log("attempting to redirect");
+        window.location.pathname = "/";
+        location.reload();
+    })
 
     $.getJSON("/articles", data => {
         // console.log(data);
@@ -11,10 +15,9 @@ $(document).ready(() => {
            
             $("#articles ul").append(`
                 <li>
-                    <div" class="card article-card"> 
-                      
+                    <div class="card article-card"> 
                             <a href="${data[i].link}" target="_blank">${data[i].title}</a>
-                            <img src="${data[i].img}" class="img-thumbnail">
+                            <img src="${data[i].img}" class="img-thumbnail m-auto">
                         <p class="card-text">
                             
                             ${data[i].summary} <br>

@@ -25,6 +25,10 @@ var ArticleSchema = new Schema ({
         type: String,
         required: true
     },
+    saved: {
+        type: Boolean,
+        default: false
+    },
     // note = object that stores a Note ID - this links the ObjectID to the Note model
     // allows us to populate the article with an associated note
     comment: [

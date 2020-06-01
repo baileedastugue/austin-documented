@@ -12,6 +12,12 @@ li {
 }
 
 li .article-card {
+  border-radius: 0;
+  background-color: white;
+  border-color: white;
+  border-top-color: #5ba2d5;
+  border-bottom-color: black;
+  border-width: 3px 0px;
   width: 31%;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
@@ -19,6 +25,32 @@ li .article-card {
   margin: 0.5vw;
   height: 33vw;
   overflow: auto;
+}
+
+li .article-card a {
+  margin: 2vw;
+  text-align: center;
+  color: black;
+}
+
+li .article-card a:hover {
+  color: #5ba2d5;
+  text-decoration: none;
+}
+
+li .article-card img {
+  width: 200px;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 100%;
+  border-color: #5ba2d5;
+  border-width: 5px;
+}
+
+li .article-card .card-text {
+  padding: 1vw;
+  background-color: #F7F7F9;
 }
 
 #myModal textarea {

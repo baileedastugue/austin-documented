@@ -23,6 +23,7 @@
     "express-handlebars": "^4.0.4",
     "heroku": "^7.41.1",
     "mongoose": "^5.9.16",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
   }
 }
