@@ -57,7 +57,12 @@ $(document).ready(() => {
                 );
             $("div.modal-footer").empty();
             $("div.modal-footer").append(`
-                <span class="toggle-comments" data-id="${data[0]._id}">View Comments</span>`)
+                <span class="view-comments" state="hidden" data-id="${data[0]._id}">View Comments</span><br>
+                `);
+            $("div.modal-footer").append(`<br>
+                <div class="view-container" data-id="${data[0]._id}"></div>
+                `)
+                
             $("div.modal-body").append(`<button type="submit" class="btn submit-btn btn-primary">Post</button>`);
         
             $(".submit-btn").attr("data-id", data[0]._id);
@@ -84,22 +89,40 @@ $(document).ready(() => {
     })
 
     $(document).on("click", "span.view-comments", function() {
-        $("div.modal-body").empty();
         var articleId = $(this).attr("data-id");
-        console.log("hello from line 61");
+        var thisContainer = ".view-container[data-id=" + articleId +"]"; 
         console.log(articleId);
-        $.ajax({
-            method: "GET",
-            url: "/articles/" + articleId
-        }).then(data => {
-            for (let i = 0; i < data[0].comment.length; i++) {
-                let commentArray = data[0].comment;
-                console.log(commentArray[i].body);
-            }
-            // console.log(data[0].comment[0].body);
-            $('#myModal').modal('show');
-
-        })
+        if ($(this).attr("state") === "hidden") {
+            $(this).attr("state", "shown");
+            $(thisContainer).show();
+            $(thisContainer).empty();
+            // $(thisContainer).css("display", "block");
+            $(this).text("Hide Comments");
+            $.ajax({
+                method: "GET",
+                url: "/articles/" + articleId
+            }).then(data => {
+                console.log(thisContainer);
+                for (let i = 0; i < data[0].comment.length; i++) {
+                    let commentArray = data[0].comment;
+                    
+                    $(thisContainer).append(`<div class="card"> 
+                        <div class="card-body">
+                            <div class="card-text">
+                                ${commentArray[i].body}
+                            </div>
+                        </div>    
+                    </div>`)
+                    console.log(commentArray[i].body);
+                }
+            })
+        }
+        else {
+            $(this).attr("state", "hidden");
+            console.log("hiding comments");
+            $(this).text("View Comments");
+            $(thisContainer).hide();
+        }
     })
 
     $(document).on("click", ".toggle-comments", function() {
