@@ -23,6 +23,30 @@ nav {
     a:hover {
         color: $yellow;
     }
+    margin-bottom: 1vw;
+}
+
+// .view-container {
+//     display: block;
+// }
+
+#myModal {
+    .btn {
+        background-color: $lightcolor;
+    }
+    .submit-btn {
+        background-color: $yellow;
+        color: $lightcolor;
+    }
+    .btn:hover {
+        background-color: black;
+    }
+    .view-comments {
+        color: $blue;
+    }
+    .view-comments:hover {
+        color: black;
+    }
 }
 
 ul {

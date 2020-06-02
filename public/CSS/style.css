@@ -8,6 +8,7 @@ span:hover {
 
 nav {
   background-color: black;
+  margin-bottom: 1vw;
 }
 
 nav .navbar-brand {
@@ -24,6 +25,27 @@ nav a {
 
 nav a:hover {
   color: #eec605;
+}
+
+#myModal .btn {
+  background-color: #F7F7F9;
+}
+
+#myModal .submit-btn {
+  background-color: #eec605;
+  color: #F7F7F9;
+}
+
+#myModal .btn:hover {
+  background-color: black;
+}
+
+#myModal .view-comments {
+  color: #5ba2d5;
+}
+
+#myModal .view-comments:hover {
+  color: black;
 }
 
 ul {
