@@ -1,98 +1,51 @@
 $(document).ready(() => {
     
-    console.log(window.location.href);
+//     console.log(window.location.href);
 
     $("a#scrape").on("click", function() {
-        console.log("hello");
-        console.log(window.location.href);
+        postArticles();
     })
 
-    var previous = null;
-    var current = null;
-    setInterval(function() {
-        $.getJSON("/articles", function(data) {
-            current = JSON.stringify(data);            
-            if (previous && current && previous !== current) {
-                console.log('refresh');
-                location.reload();
-            }
-            else {
-                event.preventDefault();
-                for (let i = 0; i < data.length; i++) {
-            
-                    var articleId = data[i]._id;
-                    // console.log(articleId);
-                   
-                    $("#articles ul").append(`
-                        <li>
-                            <div class="card article-card"> 
-                                    <a href="${data[i].link}" target="_blank">${data[i].title}</a>
-                                    <img src="${data[i].img}" class="img-thumbnail m-auto">
-                                <p class="card-text">
-                                    
-                                    ${data[i].summary} <br>
-                                    Source: ${data[i].source}<br>
-                                    <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">
-                                        Comment
-                                    </span> / 
-                                
-                                    <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
-                                    <div class="comments-container" data-id="${data[i]._id}"></div>
-                                </p>
-                            </div>
-                        </li>`);
-                    $(".comments-container").hide()
-                }
-            }
-            previous = current;
-             
-        });                       
-    }, 2000); 
-
-    // $.getJSON("/articles", data => {
-    //     console.log(data.length);
-    //     console.log(data);
-    //     for (let i = 0; i < data.length; i++) {
-            
-    //         var articleId = data[i]._id;
-    //         // console.log(articleId);
-           
-    //         $("#articles ul").append(`
-    //             <li>
-    //                 <div class="card article-card"> 
-    //                         <a href="${data[i].link}" target="_blank">${data[i].title}</a>
-    //                         <img src="${data[i].img}" class="img-thumbnail m-auto">
-    //                     <p class="card-text">
-                            
-    //                         ${data[i].summary} <br>
-    //                         Source: ${data[i].source}<br>
-    //                         <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">
-    //                             Comment
-    //                         </span> / 
-                        
-    //                         <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
-    //                         <div class="comments-container" data-id="${data[i]._id}"></div>
-    //                     </p>
-    //                 </div>
-    //             </li>`);
-    //         $(".comments-container").hide()
-    //     } 
-    // })
+    var postArticles = () => {
+        $.getJSON("/articles", data => {
+            for (let i = 0; i < data.length; i++) {
+                var articleId = data[i]._id;
+                $("#articles ul").append(`
+                    <li>
+                        <div class="card article-card"> 
+                                <a href="${data[i].link}" target="_blank">${data[i].title}</a>
+                                <img src="${data[i].img}" class="img-thumbnail m-auto">
+                            <p class="card-text">
+                                ${data[i].summary} <br>
+                                Source: ${data[i].source}<br>
+                                <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">
+                                    Comment
+                                </span> / 
+                                <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
+                                <div class="comments-container" data-id="${data[i]._id}"></div>
+                            </p>
+                        </div>
+                    </li>`);
+                $(".comments-container").hide()
+            } 
+        })
+    }
+    
+    postArticles();
 
     $(document).on("click", "span.add-comment", function() {
         var articleId = $(this).attr("data-id");
-        console.log(articleId);
+        // console.log(articleId);
         $.ajax({
             method: "GET",
             url: "/articles/" + articleId
         }).then(data => {
-            console.log(data);
+            // console.log(data);
             $('#myModal').modal('show');
             $(".modal-title").empty();
             $(".modal-title").append(`<p>${data[0].title}</p>`);
             $("div.modal-body").empty();
             $("div.modal-body").append(`
-            
                 <form>
                     <textarea id="bodyinput" name="body" placeholder="Add a comment" ></textarea>
                     
@@ -106,17 +59,14 @@ $(document).ready(() => {
             $("div.modal-footer").append(`<br>
                 <div class="view-container" data-id="${data[0]._id}"></div>
                 `)
-                
             $("div.modal-body").append(``);
-        
             $(".submit-btn").attr("data-id", data[0]._id);
-
         })
     })
 
     $(document).on("click", ".submit-btn", function() {
         var articleId = $(this).attr("data-id");
-        console.log("you tired bitch")
+        // console.log("you tired bitch")
         $.ajax({
             method: "POST",
             url: "/articles/" + articleId,
@@ -125,9 +75,8 @@ $(document).ready(() => {
             }
         })
         .then(data => {
-            console.log(data);
+            // console.log(data);
         $('#myModal').modal("hide");
-        location.reload(true);
         // $("textarea #bodyinput").val("");
         })
     })
@@ -135,7 +84,7 @@ $(document).ready(() => {
     $(document).on("click", "span.view-comments", function() {
         var articleId = $(this).attr("data-id");
         var thisContainer = ".view-container[data-id=" + articleId +"]"; 
-        console.log(articleId);
+        // console.log(articleId);
         if ($(this).attr("state") === "hidden") {
             $(this).attr("state", "shown");
             $(thisContainer).show();
@@ -146,65 +95,74 @@ $(document).ready(() => {
                 method: "GET",
                 url: "/articles/" + articleId
             }).then(data => {
-                console.log(thisContainer);
-                for (let i = 0; i < data[0].comment.length; i++) {
-                    let commentArray = data[0].comment;
-                    
+                if (data[0].comment.length === 0) {
                     $(thisContainer).append(`<div class="card"> 
                         <div class="card-body">
                             <div class="card-text">
-                                ${commentArray[i].body}
+                                No comments posted yet!
                             </div>
                         </div>    
                     </div>`)
-                    console.log(commentArray[i].body);
+                } else {
+                    $(thisContainer).empty();
+                    for (let i = 0; i < data[0].comment.length; i++) {
+                        let commentArray = data[0].comment;
+                        
+                        $(thisContainer).append(`<div class="card"> 
+                            <div class="card-body">
+                                <div class="card-text">
+                                    ${commentArray[i].body}
+                                </div>
+                            </div>    
+                        </div>`)
+                    }
                 }
             })
         }
         else {
             $(this).attr("state", "hidden");
-            console.log("hiding comments");
+            // console.log("hiding comments");
             $(this).text("View Comments");
             $(thisContainer).hide();
         }
     })
 
-    $(document).on("click", ".toggle-comments", function() {
-        var articleId = $(this).attr("data-id");
-        var thisContainer = ".comments-container[data-id=" + articleId +"]"; 
-        console.log(articleId);
-        if ($(this).attr("state") === "hidden") {
-            $(this).attr("state", "shown");
-            $(thisContainer).show();
-            $(thisContainer).empty();
-            // $(thisContainer).css("display", "block");
-            $(this).text("Hide Comments");
-            $.ajax({
-                method: "GET",
-                url: "/articles/" + articleId
-            }).then(data => {
-                console.log(thisContainer);
-                for (let i = 0; i < data[0].comment.length; i++) {
-                    let commentArray = data[0].comment;
+//     $(document).on("click", ".toggle-comments", function() {
+//         var articleId = $(this).attr("data-id");
+//         var thisContainer = ".comments-container[data-id=" + articleId +"]"; 
+//         console.log(articleId);
+//         if ($(this).attr("state") === "hidden") {
+//             $(this).attr("state", "shown");
+//             $(thisContainer).show();
+//             $(thisContainer).empty();
+//             // $(thisContainer).css("display", "block");
+//             $(this).text("Hide Comments");
+//             $.ajax({
+//                 method: "GET",
+//                 url: "/articles/" + articleId
+//             }).then(data => {
+//                 console.log(thisContainer);
+//                 for (let i = 0; i < data[0].comment.length; i++) {
+//                     let commentArray = data[0].comment;
                     
-                    $(thisContainer).append(`<div class="card"> 
-                        <div class="card-body">
-                            <div class="card-text">
-                                ${commentArray[i].body}
-                            </div>
-                        </div>    
-                    </div>`)
-                    console.log(commentArray[i].body);
-                }
-            })
-        }
-        else {
-            $(this).attr("state", "hidden");
-            console.log("hiding comments");
-            $(this).text("View Comments");
-            $(thisContainer).hide();
-        }
-    })
+//                     $(thisContainer).append(`<div class="card"> 
+//                         <div class="card-body">
+//                             <div class="card-text">
+//                                 ${commentArray[i].body}
+//                             </div>
+//                         </div>    
+//                     </div>`)
+//                     console.log(commentArray[i].body);
+//                 }
+//             })
+//         }
+//         else {
+//             $(this).attr("state", "hidden");
+//             console.log("hiding comments");
+//             $(this).text("View Comments");
+//             $(thisContainer).hide();
+//         }
+//     })
 
 
 })

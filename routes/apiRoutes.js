@@ -4,19 +4,22 @@ const db = require("../models");
 const path = require("path");
 
 module.exports = function(app) {
+    let linkArray = [];
+    let result = {};
+
     app.get("/scrape", (req, res) => {
-        let linkArray = [];
         axios.get("https://austin.eater.com/").then(response => {
             let $ = cheerio.load(response.data);
             $("h2.c-entry-box--compact__title").each(function(i, element) {
                 let link = $(this)
                     .children("a")
                     .attr("href");
-                linkArray.push(link);
+                if (!linkArray.includes(link)) {
+                    linkArray.push(link);
+                }
             });
-            for (let i = 0; i < linkArray.length -1 ; i++) {
+            for (let i = 0; i < linkArray.length-1 ; i++) {
                 axios.get(String(linkArray[i])).then(response => {
-                    let result = {};
                     result.link = linkArray[i];
                     const $ = cheerio.load(response.data);
                     result.title = $("h1.c-page-title").text();
@@ -24,25 +27,34 @@ module.exports = function(app) {
                     result.time = $("time.c-byline__item").attr("datetime");
                     result.img = $("span.e-image__image").attr("data-original");
                     result.source = "Eater Austin"
-                    // console.log(time);
-    
-                    db.Article.create(result)
-                    .then(dbArticle => {
-                    // console.log(dbArticle);
-                    console.log("articles scraped");
+            
+                    let query = result.title;
+                    console.log(i, query);
+                    db.Article.findOne({title: query}, function (err, example) {
+                        if (err) console.log(err);
+                        // console.log(example);
+                        // if the article hasn't been scraped --> returns null (false)
+                        // if the article has been scraped --> returns article (true)
+                        else if (example) {
+                            console.log("this has already been scraped");
+                        } 
+                        else {
+                            db.Article.create(result)
+                                .then(dbArticle => {
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                })
+                        }
                     })
-                    .catch(err => {
-                        console.log(err);
-                    })
-                })
+                    
+                }) 
             }
-        }).then(function () {
-        return res.redirect('/');
-
         })
-        // res.send("scraped");
-    })
-    
+        .then(function () {
+            return res.redirect('/');
+        })
+    });
     
     app.get("/articles", (req, res) => {
         db.Article.find().sort({ time: -1})
