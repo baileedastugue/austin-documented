@@ -1,11 +1,28 @@
 $blue: #5ba2d5;
 $lightcolor: #F7F7F9;
+$yellow: #eec605;
 
 span {
     color: $blue;
 }
 span:hover {
     color: black;
+}
+
+nav {
+    background-color: black;
+    .navbar-brand {
+        color: $blue;
+    }
+    .navbar-brand:hover {
+        color: $lightcolor;
+    }
+    a {
+        color: $lightcolor;
+    }
+    a:hover {
+        color: $yellow;
+    }
 }
 
 ul {
@@ -22,7 +39,7 @@ li {
         background-color: white;
         border-color: white;
         border-top-color: $blue;
-        border-bottom-color: black;
+        border-bottom-color: $yellow;
         border-width: 3px 0px;
         // border-top-width: 3px;;
       

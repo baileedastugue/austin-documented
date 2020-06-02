@@ -9,7 +9,7 @@ $(document).ready(() => {
                 window.location.hash = 'r';
                 window.location.reload(1);
             }
-        }, 1000);
+        }, 2000);
     })
 
     var postArticles = () => {

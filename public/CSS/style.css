@@ -6,6 +6,26 @@ span:hover {
   color: black;
 }
 
+nav {
+  background-color: black;
+}
+
+nav .navbar-brand {
+  color: #5ba2d5;
+}
+
+nav .navbar-brand:hover {
+  color: #F7F7F9;
+}
+
+nav a {
+  color: #F7F7F9;
+}
+
+nav a:hover {
+  color: #eec605;
+}
+
 ul {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -24,7 +44,7 @@ li .article-card {
   background-color: white;
   border-color: white;
   border-top-color: #5ba2d5;
-  border-bottom-color: black;
+  border-bottom-color: #eec605;
   border-width: 3px 0px;
   width: 31%;
   display: -webkit-inline-box;
