@@ -4,6 +4,12 @@ $(document).ready(() => {
 
     $("a#scrape").on("click", function() {
         postArticles();
+        setTimeout(function () {
+            if(window.location.hash != '#r') {
+                window.location.hash = 'r';
+                window.location.reload(1);
+            }
+        }, 1000);
     })
 
     var postArticles = () => {

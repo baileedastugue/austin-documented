@@ -27,34 +27,42 @@ module.exports = function(app) {
                     result.time = $("time.c-byline__item").attr("datetime");
                     result.img = $("span.e-image__image").attr("data-original");
                     result.source = "Eater Austin"
-            
-                    let query = result.title;
-                    console.log(i, query);
-                    db.Article.findOne({title: query}, function (err, example) {
-                        if (err) console.log(err);
-                        // console.log(example);
-                        // if the article hasn't been scraped --> returns null (false)
-                        // if the article has been scraped --> returns article (true)
-                        else if (example) {
-                            console.log("this has already been scraped");
-                        } 
-                        else {
-                            db.Article.create(result)
-                                .then(dbArticle => {
-                                })
-                                .catch(err => {
-                                    console.log(err);
-                                })
-                        }
-                    })
                     
+                    db.Article.create(result)
+                            .then(dbArticle => {
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            }) 
+                    // let query = result.title;
+                    // db.Article.find({ title: query }).then(response => {
+                    //     // console.log("hello from line 43");
+                    //     console.log(response);
+                    //     // on first attempt, response = [], an empty array
+                    //     // after it's been populated, the response is a single object in the array
+                    //     // if (response.length === 0) {
+                    //         console.log("already in db");
+                    //     // } else {
+                    //     // }
+                    // })
+                       
                 }) 
             }
+            console.log(resultArray);
         })
         .then(function () {
-            return res.redirect('/');
+            return res.redirect("/");
         })
     });
+
+    app.get("/clear", (req, res) => {
+        db.Article.find({}).deleteMany({}).then(dbArticle => {
+            console.log(dbArticle);
+        })
+        .then(() => {
+            return res.redirect("/");
+        })
+    })
     
     app.get("/articles", (req, res) => {
         db.Article.find().sort({ time: -1})
