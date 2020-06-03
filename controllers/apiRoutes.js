@@ -58,11 +58,13 @@ const router = express.Router();
     });
 
     router.get("/", (req, res) => {
-        db.Article.find({})
+        db.Article.find({}).lean()
             .then(function(dbArticle) {
+                console.log(dbArticle);
                 let hbsObject = {
                     articles: dbArticle
                 };
+                // console.log(hbsObject);
                 res.render("index", hbsObject);
             })
     })

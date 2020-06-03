@@ -25,7 +25,29 @@
 
     <div class="container-fluid">
         <div id="articles">
-            <ul></ul>
+            <ul>
+                {{#if articles}}
+                {{#each articles}}
+                    <li>
+                        <div class="card article-card"> 
+                                 <a href="{{this.link}}" target="_blank">{{this.title}}</a>
+                                 <img src="{{this.img}}" class="img-thumbnail m-auto">
+                             <p class="card-text">
+                                 {{this.summary}} <br>
+                                 Source: {{this.source}}<br>
+                                 <span class="add-comment" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModal">
+                                     Comment
+                                 </span> / 
+                                 <span class="toggle-comments" state="hidden" data-id="{{this._id}}">View Comments</span>
+                                 <div class="comments-container" data-id="{{this._id}}"></div>
+                             </p>
+                         </div>
+                     </li>
+                {{/each}}
+                {{else}}
+                 <p> no articles</p>
+                 {{/if}}
+            </ul>
         </div>
     <div id="comments">
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
