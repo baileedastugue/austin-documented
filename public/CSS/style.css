@@ -65,30 +65,29 @@ li .article-card {
   border-radius: 0;
   background-color: white;
   border-color: white;
-  border-top-color: #5ba2d5;
-  border-bottom-color: #eec605;
+  border-top-color: #eec605;
+  border-bottom-color: #5ba2d5;
   border-width: 3px 0px;
   width: 31%;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  margin: 0.5vw;
+  margin: 1vw;
   height: 33vw;
   overflow: auto;
 }
 
-li .article-card a {
-  margin: 2vw;
+li .article-card .card-text {
+  padding: 1vw;
+  background-color: #F7F7F9;
+}
+
+li .article-card .upper-card {
   text-align: center;
-  color: black;
 }
 
-li .article-card a:hover {
-  color: #5ba2d5;
-  text-decoration: none;
-}
-
-li .article-card img {
+li .article-card .upper-card img {
+  padding: 0vw;
   width: 200px;
   height: 200px;
   -o-object-fit: cover;
@@ -98,9 +97,40 @@ li .article-card img {
   border-width: 5px;
 }
 
-li .article-card .card-text {
-  padding: 1vw;
-  background-color: #F7F7F9;
+li .article-card .upper-card a {
+  margin: 2vw;
+  color: black;
+}
+
+li .article-card .upper-card a:hover {
+  color: #5ba2d5;
+  text-decoration: none;
+}
+
+li .article-card .upper-card span.star {
+  font-size: 2em;
+  float: right;
+}
+
+li .article-card .upper-card span.star.unsaved {
+  color: #5ba2d5;
+}
+
+li .article-card .upper-card span.star.saved {
+  color: #eec605;
+}
+
+li .article-card .upper-card span.star:hover {
+  color: #eec605;
+}
+
+li .article-card .comments-container .card-body {
+  padding: 0.5vw;
+}
+
+li .article-card .comments-container .card-text {
+  background-color: white;
+  padding: 0vw;
 }
 
 #myModal textarea {

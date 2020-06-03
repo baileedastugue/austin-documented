@@ -1,7 +1,4 @@
 $(document).ready(() => {
-    
-//     console.log(window.location.href);
-
     $("a#scrape").on("click", function() {
         postArticles();
         setTimeout(function () {
@@ -9,44 +6,15 @@ $(document).ready(() => {
                 window.location.hash = 'r';
                 window.location.reload(1);
             }
-        }, 2000);
+        }, 3000);
     })
-
-    // var postArticles = () => {
-    //     $.getJSON("/articles", data => {
-    //         for (let i = 0; i < data.length; i++) {
-    //             var articleId = data[i]._id;
-    //             $("#articles ul").append(`
-    //                 <li>
-    //                     <div class="card article-card"> 
-    //                             <a href="${data[i].link}" target="_blank">${data[i].title}</a>
-    //                             <img src="${data[i].img}" class="img-thumbnail m-auto">
-    //                         <p class="card-text">
-    //                             ${data[i].summary} <br>
-    //                             Source: ${data[i].source}<br>
-    //                             <span class="add-comment" data-id="${data[i]._id}" data-toggle="modal" data-target="#exampleModal">
-    //                                 Comment
-    //                             </span> / 
-    //                             <span class="toggle-comments" state="hidden" data-id="${data[i]._id}">View Comments</span>
-    //                             <div class="comments-container" data-id="${data[i]._id}"></div>
-    //                         </p>
-    //                     </div>
-    //                 </li>`);
-    //             $(".comments-container").hide()
-    //         } 
-    //     })
-    // }
-    
-    // postArticles();
 
     $(document).on("click", "span.add-comment", function() {
         var articleId = $(this).attr("data-id");
-        // console.log(articleId);
         $.ajax({
             method: "GET",
             url: "/articles/" + articleId
         }).then(data => {
-            // console.log(data);
             $('#myModal').modal('show');
             $(".modal-title").empty();
             $(".modal-title").append(`<p>${data[0].title}</p>`);

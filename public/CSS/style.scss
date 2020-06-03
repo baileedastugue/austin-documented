@@ -26,10 +26,6 @@ nav {
     margin-bottom: 1vw;
 }
 
-// .view-container {
-//     display: block;
-// }
-
 #myModal {
     .btn {
         background-color: $lightcolor;
@@ -50,49 +46,70 @@ nav {
 }
 
 ul {
-    // align-items: stretch; /* Default */
     justify-content: space-between;
     width: 100%;
-    // background: #cacaca;
     margin: auto;
-    // padding: 0;
 }
 li {
     .article-card {
         border-radius: 0;
         background-color: white;
         border-color: white;
-        border-top-color: $blue;
-        border-bottom-color: $yellow;
+        border-top-color: $yellow;
+        border-bottom-color: $blue;
         border-width: 3px 0px;
-        // border-top-width: 3px;;
-      
-        a {
-            margin: 2vw;
-            text-align: center;
-            color: black;
-        }
-        a:hover {
-            color: $blue;
-            text-decoration: none;
-            // font-style: italic;
-        }
+        
         width: 31%;
         display: inline-flex;
-        margin: 0.5vw;
+        margin: 1vw;
         height: 33vw;
         overflow: auto; 
-        img {
-            width:200px;
-            height:200px;
-            object-fit:cover;
-            border-radius:100%;
-            border-color: $blue;
-            border-width: 5px;
-        }
+       
         .card-text {
             padding: 1vw;
             background-color: $lightcolor;
+        }
+        .upper-card{
+            text-align: center;
+            img {
+                padding: 0vw;
+                width:200px;
+                height:200px;
+                object-fit:cover;
+                border-radius:100%;
+                border-color: $blue;
+                border-width: 5px;
+            }
+            a {
+                margin: 2vw;
+                color: black;
+            }
+            a:hover {
+                color: $blue;
+                text-decoration: none;
+            }
+            span.star {
+                font-size: 2em;
+                float: right;
+            }
+            span.star.unsaved {
+                color: $blue;
+            }
+            span.star.saved {
+                color: $yellow;
+            }
+            span.star:hover {
+                color: $yellow;
+            }
+        }
+        .comments-container {
+            .card-body {
+                padding: 0.5vw;
+            }
+            .card-text {
+                background-color: white;
+                padding: 0vw;
+            }
         }
     }
     display: inline;

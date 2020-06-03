@@ -69,9 +69,22 @@ const router = express.Router();
             })
     })
 
+    router.get("/saved", (req, res) => {
+        db.Article.find({
+            saved: false
+        }).lean()
+            .then(function(dbArticle) {
+                console.log(dbArticle);
+                let hbsObject = {
+                    articles: dbArticle
+                };
+                res.render("saved", hbsObject);
+            })
+        
+    })
+
     router.get("/clear", (req, res) => {
         db.Article.find({}).deleteMany({}).then(dbArticle => {
-            // console.log(dbArticle);
         })
         .then(() => {
             return res.redirect("/");
