@@ -58,7 +58,7 @@ const router = express.Router();
     });
 
     router.get("/", (req, res) => {
-        db.Article.find({}).lean()
+        db.Article.find({}).sort({ time: -1}).lean()
             .then(function(dbArticle) {
                 console.log(dbArticle);
                 let hbsObject = {
@@ -71,7 +71,7 @@ const router = express.Router();
 
     router.get("/saved", (req, res) => {
         db.Article.find({
-            saved: false
+            saved: true
         }).lean()
             .then(function(dbArticle) {
                 console.log(dbArticle);
@@ -149,6 +149,32 @@ const router = express.Router();
         .catch(function(err) {
             res.json(err);
         })
+    })
+
+    router.put("/saved/:id", (req, res) => {
+        var condition = "id = " + req.params.id;
+        db.Article.findOneAndUpdate({
+            _id: req.params.id
+        }, {saved: true})
+            .then(dbArticle => {
+                res.json(dbArticle);
+            })
+            .catch(err => {
+                res.json(err);
+            })
+    })
+
+    router.put("/unsaved/:id", (req, res) => {
+        var condition = "id = " + req.params.id;
+        db.Article.findOneAndUpdate({
+            _id: req.params.id
+        }, {saved: false})
+            .then(dbArticle => {
+                res.json(dbArticle);
+            })
+            .catch(err => {
+                res.json(err);
+            })
     })
 
     module.exports = router;

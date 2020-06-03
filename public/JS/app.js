@@ -1,12 +1,21 @@
 $(document).ready(() => {
     $("a#scrape").on("click", function() {
-        postArticles();
-        setTimeout(function () {
-            if(window.location.hash != '#r') {
-                window.location.hash = 'r';
-                window.location.reload(1);
-            }
-        }, 3000);
+        postArticles().then(() => {
+            location.reload(); 
+        })
+    })
+
+    $(document).on("click", "span.star", function() {
+        console.log("you clicked a star!");
+        let articleId = $(this).attr("data-id");
+        $.ajax({
+            method: "PUT",
+            url: "/saved/" + articleId
+        }).then(function() {
+            $(this).removeClass("unsaved").addClass("saved");
+            console.log("element has been saved");
+            $(this).load(location.href + $(this));
+        })
     })
 
     $(document).on("click", "span.add-comment", function() {

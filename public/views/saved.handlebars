@@ -23,16 +23,17 @@
 
     <div class="container-fluid">
         <div id="articles">
-            {{#if saved}}
-                <ul>
+            
+                
                 {{#each articles}}
+                    {{#if saved}}
                     <li>
                         <div class="card article-card"> 
                             <div class="upper-card">
                                 {{#if saved}}
-                                    <span state="favorited" class="star">&#11089;</span><br>
+                                    <span state="favorited" class="star saved" data-id="{{this._id}}">&#11089;</span><br>
                                 {{else}}
-                                    <span state="unfavorited" class="star">&#11090;</span><br>
+                                    <span state="unfavorited" class="star unsaved" data-id="{{this._id}}">&#11090;</span><br>
                                 {{/if}}
                                  <img src="{{this.img}}" class="img-thumbnail m-auto"><br>
 
@@ -50,8 +51,7 @@
                              </p>
                          </div>
                      </li>
-                {{/each}}
-            </ul>
+ 
                 {{else}}
                 <div class="container">
                     <div class="jumbotron">
@@ -59,6 +59,8 @@
                     </div>
                 </div>
                 {{/if}}
+                {{/each}}
+
         </div>
     <div id="comments">
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
