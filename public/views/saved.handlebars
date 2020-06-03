@@ -23,6 +23,7 @@
     </nav>
 <div class="wrapper">
     <div class="container-fluid">
+        <h1>Saved Articles:</h1>
         {{!-- <div id="articles"> --}}
               {{#each articles}}
                     {{#if saved}}
@@ -34,9 +35,9 @@
                                 {{else}}
                                     <span state="unfavorited" class="star unsaved" data-id="{{this._id}}">&#11090;</span><br>
                                 {{/if}}
-                                 <img src="{{this.img}}" class="img-thumbnail m-auto"><br>
+                                 <img src="{{this.img}}" class="img-thumbnail m-auto"><br><br>
 
-                                 <a href="{{this.link}}" target="_blank">{{this.title}}</a>
+                                 <a href="{{this.link}}" target="_blank">{{this.title}}</a><br>
                             </div>
                                 
                              <p class="card-text">

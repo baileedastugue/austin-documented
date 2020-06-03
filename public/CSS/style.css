@@ -76,8 +76,11 @@ nav a:hover {
 }
 
 .wrapper li .article-card .card-text {
+  margin-top: 1vw;
   padding: 1vw;
   background-color: #F7F7F9;
+  text-align: left;
+  line-height: 1.6;
 }
 
 .wrapper li .article-card .upper-card {
@@ -96,7 +99,8 @@ nav a:hover {
 }
 
 .wrapper li .article-card .upper-card a {
-  margin: 2vw;
+  text-align: center;
+  margin-top: 2vw;
   color: black;
 }
 

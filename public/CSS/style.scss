@@ -47,14 +47,6 @@ nav {
 
 .wrapper {
     margin: auto;
-    // ul {
-    //     justify-content: space-between;
-    //     width: 100%;
-    //     margin: auto;
-    // // }
-    // #articles {
-    //     margin: auto;
-    // }
     display: inline-block;
     text-align: center;
     li {
@@ -72,8 +64,11 @@ nav {
             overflow: auto; 
            
             .card-text {
+                margin-top: 1vw;
                 padding: 1vw;
                 background-color: $lightcolor;
+                text-align: left;
+                line-height: 1.6;
             }
             .upper-card{
                 text-align: center;
@@ -87,7 +82,8 @@ nav {
                     border-width: 5px;
                 }
                 a {
-                    margin: 2vw;
+                    text-align: center;
+                    margin-top: 2vw;
                     color: black;
                 }
                 a:hover {

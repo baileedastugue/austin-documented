@@ -22,8 +22,10 @@
             </ul>
         </div>
     </nav>
+
 <div class="wrapper">
     <div class="container-fluid">
+        
         {{!-- <div id="articles"> --}}
                 {{#if articles}}
                 {{!-- <ul> --}}
@@ -36,14 +38,14 @@
                                 {{else}}
                                     <span state="unfavorited" class="star unsaved" data-id="{{this._id}}">&#11090;</span><br>
                                 {{/if}}
-                                 <img src="{{this.img}}" class="img-thumbnail m-auto"><br>
+                                 <img src="{{this.img}}" class="img-thumbnail"><br>
 
                                  <a href="{{this.link}}" target="_blank">{{this.title}}</a>
                             </div>
                                 
                              <p class="card-text">
-                                 {{this.summary}} <br>
-                                 Source: {{this.source}}<br>
+                                 {{this.summary}} <br><br>
+                                 Source: {{this.source}}<br><br>
                                  <span class="add-comment" data-id="{{this._id}}" data-toggle="modal" data-target="#exampleModal">
                                      Comment
                                  </span> / 

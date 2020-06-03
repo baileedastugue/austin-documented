@@ -4,15 +4,17 @@ const db = require("../models");
 const express = require("express");
 const router = express.Router();
 
-    let linkArray = [];
-    let result = {};
+    
 
     router.get("/scrape", (req, res) => {
         // this grabs the html website body
         axios.get("https://austin.eater.com/").then(response => {
             // load the html body into cheerio, saving it as $
             let $ = cheerio.load(response.data);
+            let linkArray = [];
+            let result = {};
             $("h2.c-entry-box--compact__title").each(function(i, element) {
+                
                 let link = $(this)
                     .children("a")
                     .attr("href");
@@ -50,8 +52,44 @@ const router = express.Router();
                        
                 }) 
             }
-            console.log(resultArray);
+            // console.log(resultArray);
         })
+        .then(axios.get("https://austin.culturemap.com/").then(response => {
+            let $ = cheerio.load(response.data);
+            let linkArray = [];
+            let result = {};
+            $("div.kicker").each(function(i, element) {
+                // let link = "https://austin.culturemap.com"
+                let link = $(this)
+                    .siblings("a")
+                    .attr("href");
+                if (!link.includes("https")) {
+                    link = "https://austin.culturemap.com/" + link;
+                }
+                if (!linkArray.includes(link)) {
+                    linkArray.push(link);
+                }
+            })
+            // console.log(linkArray);
+            for (let i = 0; i < linkArray.length-1 ; i++) {
+                axios.get(String(linkArray[i])).then(response => {
+                    result.link = linkArray[i];
+                    const $ = cheerio.load(response.data);
+                    result.summary = $("div.article").children("div.kicker").text();
+                    result.title = $("h1.headline").text().trim();
+                    result.time = $("time").attr("datetime");
+                    result.img = $("div.slide-container#slide0").children("img.slide-img").attr("src");
+                    result.source = "Austin Culture Map"
+                    console.log(result);
+                    db.Article.create(result)
+                            .then(dbArticle => {
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            }) 
+                }) 
+            }
+        }))
         .then(() => {
             return res.redirect("/");
         })
@@ -60,7 +98,7 @@ const router = express.Router();
     router.get("/", (req, res) => {
         db.Article.find({}).sort({ time: -1}).lean()
             .then(function(dbArticle) {
-                console.log(dbArticle);
+                // console.log(dbArticle);
                 let hbsObject = {
                     articles: dbArticle
                 };
@@ -74,7 +112,7 @@ const router = express.Router();
             saved: true
         }).lean()
             .then(function(dbArticle) {
-                console.log(dbArticle);
+                // console.log(dbArticle);
                 let hbsObject = {
                     articles: dbArticle
                 };
