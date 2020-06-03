@@ -48,45 +48,43 @@ nav a:hover {
   color: black;
 }
 
-ul {
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 100%;
+.wrapper {
   margin: auto;
+  display: inline-block;
+  text-align: center;
 }
 
-li {
+.wrapper li {
   display: inline;
   list-style-type: none;
 }
 
-li .article-card {
+.wrapper li .article-card {
   border-radius: 0;
   background-color: white;
   border-color: white;
   border-top-color: #eec605;
   border-bottom-color: #5ba2d5;
   border-width: 3px 0px;
-  width: 300px;
+  width: 400px;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  margin: 1vw;
-  height: 300px;
+  margin: 2vw;
+  height: 400px;
   overflow: auto;
 }
 
-li .article-card .card-text {
+.wrapper li .article-card .card-text {
   padding: 1vw;
   background-color: #F7F7F9;
 }
 
-li .article-card .upper-card {
+.wrapper li .article-card .upper-card {
   text-align: center;
 }
 
-li .article-card .upper-card img {
+.wrapper li .article-card .upper-card img {
   padding: 0vw;
   width: 200px;
   height: 200px;
@@ -97,38 +95,38 @@ li .article-card .upper-card img {
   border-width: 5px;
 }
 
-li .article-card .upper-card a {
+.wrapper li .article-card .upper-card a {
   margin: 2vw;
   color: black;
 }
 
-li .article-card .upper-card a:hover {
+.wrapper li .article-card .upper-card a:hover {
   color: #5ba2d5;
   text-decoration: none;
 }
 
-li .article-card .upper-card span.star {
+.wrapper li .article-card .upper-card span.star {
   font-size: 2em;
   float: right;
 }
 
-li .article-card .upper-card span.star.unsaved {
+.wrapper li .article-card .upper-card span.star.unsaved {
   color: #5ba2d5;
 }
 
-li .article-card .upper-card span.star.saved {
+.wrapper li .article-card .upper-card span.star.saved {
   color: #eec605;
 }
 
-li .article-card .upper-card span.star:hover {
+.wrapper li .article-card .upper-card span.star:hover {
   color: black;
 }
 
-li .article-card .comments-container .card-body {
+.wrapper li .article-card .comments-container .card-body {
   padding: 0.5vw;
 }
 
-li .article-card .comments-container .card-text {
+.wrapper li .article-card .comments-container .card-text {
   background-color: white;
   padding: 0vw;
 }

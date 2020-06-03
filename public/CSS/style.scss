@@ -45,76 +45,85 @@ nav {
     }
 }
 
-ul {
-    justify-content: space-between;
-    width: 100%;
+.wrapper {
     margin: auto;
-}
-li {
-    .article-card {
-        border-radius: 0;
-        background-color: white;
-        border-color: white;
-        border-top-color: $yellow;
-        border-bottom-color: $blue;
-        border-width: 3px 0px;
-        
-        width: 300px;
-        display: inline-flex;
-        margin: 1vw;
-        height: 300px;
-        overflow: auto; 
-       
-        .card-text {
-            padding: 1vw;
-            background-color: $lightcolor;
-        }
-        .upper-card{
-            text-align: center;
-            img {
-                padding: 0vw;
-                width:200px;
-                height:200px;
-                object-fit:cover;
-                border-radius:100%;
-                border-color: $blue;
-                border-width: 5px;
-            }
-            a {
-                margin: 2vw;
-                color: black;
-            }
-            a:hover {
-                color: $blue;
-                text-decoration: none;
-            }
-            span.star {
-                font-size: 2em;
-                float: right;
-            }
-            span.star.unsaved {
-                color: $blue;
-            }
-            span.star.saved {
-                color: $yellow;
-            }
-            span.star:hover {
-                color: black;
-            }
-        }
-        .comments-container {
-            .card-body {
-                padding: 0.5vw;
-            }
+    // ul {
+    //     justify-content: space-between;
+    //     width: 100%;
+    //     margin: auto;
+    // // }
+    // #articles {
+    //     margin: auto;
+    // }
+    display: inline-block;
+    text-align: center;
+    li {
+        .article-card {
+            border-radius: 0;
+            background-color: white;
+            border-color: white;
+            border-top-color: $yellow;
+            border-bottom-color: $blue;
+            border-width: 3px 0px;
+            width: 400px;
+            display: inline-flex;
+            margin: 2vw;
+            height: 400px;
+            overflow: auto; 
+           
             .card-text {
-                background-color: white;
-                padding: 0vw;
+                padding: 1vw;
+                background-color: $lightcolor;
+            }
+            .upper-card{
+                text-align: center;
+                img {
+                    padding: 0vw;
+                    width:200px;
+                    height:200px;
+                    object-fit:cover;
+                    border-radius:100%;
+                    border-color: $blue;
+                    border-width: 5px;
+                }
+                a {
+                    margin: 2vw;
+                    color: black;
+                }
+                a:hover {
+                    color: $blue;
+                    text-decoration: none;
+                }
+                span.star {
+                    font-size: 2em;
+                    float: right;
+                }
+                span.star.unsaved {
+                    color: $blue;
+                }
+                span.star.saved {
+                    color: $yellow;
+                }
+                span.star:hover {
+                    color: black;
+                }
+            }
+            .comments-container {
+                .card-body {
+                    padding: 0.5vw;
+                }
+                .card-text {
+                    background-color: white;
+                    padding: 0vw;
+                }
             }
         }
+        display: inline;
+        list-style-type: none;
     }
-    display: inline;
-    list-style-type: none;
 }
+
+
 
 #myModal {
     textarea {
