@@ -68,12 +68,12 @@ li .article-card {
   border-top-color: #eec605;
   border-bottom-color: #5ba2d5;
   border-width: 3px 0px;
-  width: 31%;
+  width: 300px;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
   margin: 1vw;
-  height: 33vw;
+  height: 300px;
   overflow: auto;
 }
 

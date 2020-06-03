@@ -8,14 +8,28 @@ $(document).ready(() => {
     $(document).on("click", "span.star", function() {
         console.log("you clicked a star!");
         let articleId = $(this).attr("data-id");
-        $.ajax({
-            method: "PUT",
-            url: "/saved/" + articleId
-        }).then(function() {
-            $(this).removeClass("unsaved").addClass("saved");
-            console.log("element has been saved");
-            $(this).load(location.href + $(this));
-        })
+        let state = $(this).attr("state");
+        if (state === "unfavorited") {
+            $.ajax({
+                method: "PUT",
+                url: "/saved/" + articleId
+            }).then(function() {
+                $(this).removeClass("unsaved").addClass("saved");
+                console.log("element has been saved");
+                // $(".article-card").load(location.href + " .article-card");
+                location.reload();
+            })
+        } else {
+            $.ajax({
+                method: "PUT",
+                url: "/unsaved/" + articleId
+            }).then(function() {
+                $(this).removeClass("saved").addClass("unsaved");
+                console.log("element has been unsaved");
+                // $(".article-card").load(location.href + " .article-card");
+                location.reload();
+            })
+        }
     })
 
     $(document).on("click", "span.add-comment", function() {
