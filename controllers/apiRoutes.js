@@ -1,14 +1,16 @@
 const cheerio = require("cheerio");
 const axios = require("axios");
 const db = require("../models");
-const path = require("path");
+const express = require("express");
+const router = express.Router();
 
-module.exports = function(app) {
     let linkArray = [];
     let result = {};
 
-    app.get("/scrape", (req, res) => {
+    router.get("/scrape", (req, res) => {
+        // this grabs the html website body
         axios.get("https://austin.eater.com/").then(response => {
+            // load the html body into cheerio, saving it as $
             let $ = cheerio.load(response.data);
             $("h2.c-entry-box--compact__title").each(function(i, element) {
                 let link = $(this)
@@ -22,8 +24,8 @@ module.exports = function(app) {
                 axios.get(String(linkArray[i])).then(response => {
                     result.link = linkArray[i];
                     const $ = cheerio.load(response.data);
-                    result.title = $("h1.c-page-title").text();
-                    result.summary = $("p.c-entry-summary").text();
+                    result.title = $("h1.c-page-title").text().trim();
+                    result.summary = $("p.c-entry-summary").text().trim();
                     result.time = $("time.c-byline__item").attr("datetime");
                     result.img = $("span.e-image__image").attr("data-original");
                     result.source = "Eater Austin"
@@ -50,21 +52,34 @@ module.exports = function(app) {
             }
             console.log(resultArray);
         })
-        .then(function () {
+        .then(() => {
             return res.redirect("/");
         })
     });
 
-    app.get("/clear", (req, res) => {
+    router.get("/", (req, res) => {
+        db.Article.find({})
+            .then(function(dbArticle) {
+                let hbsObject = {
+                    articles: dbArticle
+                };
+                res.render("index", hbsObject);
+            })
+    })
+
+    router.get("/clear", (req, res) => {
         db.Article.find({}).deleteMany({}).then(dbArticle => {
             console.log(dbArticle);
         })
         .then(() => {
             return res.redirect("/");
         })
+        .catch((err) => {
+            res.json(err);
+        })
     })
     
-    app.get("/articles", (req, res) => {
+    router.get("/articles", (req, res) => {
         db.Article.find().sort({ time: -1})
             .populate("Article")
             .then(dbArticle => {
@@ -77,7 +92,7 @@ module.exports = function(app) {
     })
     
     // grabs article by its id
-    app.get("/articles/:id", (req, res) => {
+    router.get("/articles/:id", (req, res) => {
         db.Article.find({
             _id: req.params.id
         })
@@ -92,7 +107,7 @@ module.exports = function(app) {
     })
     
     // saves and updates an article's assoc comment
-    app.post("/articles/:id", function(req, res) {
+    router.post("/articles/:id", function(req, res) {
         // Create a new Note in the db
         db.Comment.create(req.body)
           .then(function(dbComments) {
@@ -111,7 +126,7 @@ module.exports = function(app) {
       });
     
     // returns all comments
-    app.get("/comments", function (req, res) {
+    router.get("/comments", function (req, res) {
         db.Comment.find({})
         .then(function(dbComments) {
             res.json(dbComments);
@@ -120,4 +135,5 @@ module.exports = function(app) {
             res.json(err);
         })
     })
-}
+
+    module.exports = router;

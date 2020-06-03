@@ -1,16 +1,9 @@
-// scraping tools
-// axios = a promise-based http library
-
-
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
 // initializes Express
 let app = express();
-
-// database configuration
-
 
 let PORT = process.env.PORT || 3030;
 
@@ -19,15 +12,21 @@ app.use(logger("dev"));
 // parse request body as JSON
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(express.static(__dirname + "/public"));
+app.set('views', __dirname + '/public/views');
 
-app.use(express.static("public"));
+var exphbs = require("express-handlebars");
+app.engine("handlebars", exphbs({defaultLayout: "main"}));
+app.set("view engine", "handlebars");
+
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/austin-documented";
 
 mongoose.connect(MONGODB_URI);
 
-require("./routes/apiRoutes") (app);
-require("./routes/htmlRoutes") (app);
+var routes = require("./controllers/apiRoutes.js");
+app.use(routes);
+
 
 
 
