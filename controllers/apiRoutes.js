@@ -71,7 +71,7 @@ const router = express.Router();
 
     router.get("/clear", (req, res) => {
         db.Article.find({}).deleteMany({}).then(dbArticle => {
-            console.log(dbArticle);
+            // console.log(dbArticle);
         })
         .then(() => {
             return res.redirect("/");

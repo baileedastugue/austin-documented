@@ -25,13 +25,14 @@
 
     <div class="container-fluid">
         <div id="articles">
-            <ul>
                 {{#if articles}}
+                <ul>
                 {{#each articles}}
                     <li>
                         <div class="card article-card"> 
-                                 <a href="{{this.link}}" target="_blank">{{this.title}}</a>
                                  <img src="{{this.img}}" class="img-thumbnail m-auto">
+
+                                 <a href="{{this.link}}" target="_blank">{{this.title}}</a>
                              <p class="card-text">
                                  {{this.summary}} <br>
                                  Source: {{this.source}}<br>
@@ -44,10 +45,14 @@
                          </div>
                      </li>
                 {{/each}}
-                {{else}}
-                 <p> no articles</p>
-                 {{/if}}
             </ul>
+                {{else}}
+                <div class="container">
+                    <div class="jumbotron">
+                        <h1>No articles currently scraped! </h1>
+                    </div>
+                </div>
+                {{/if}}
         </div>
     <div id="comments">
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
