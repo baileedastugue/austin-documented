@@ -131,6 +131,7 @@ nav a:hover {
 }
 
 .wrapper li .article-card .comments-container .card-text {
+  margin-top: 0vw;
   background-color: white;
   padding: 0vw;
 }

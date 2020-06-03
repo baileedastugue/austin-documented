@@ -80,6 +80,43 @@ const router = express.Router();
                     result.time = $("time").attr("datetime");
                     result.img = $("div.slide-container#slide0").children("img.slide-img").attr("src");
                     result.source = "Austin Culture Map"
+                    // console.log(result);
+                    db.Article.create(result)
+                            .then(dbArticle => {
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            }) 
+                }) 
+            }
+        }))
+        .then(axios.get("https://www.austinmonthly.com/").then(response => {
+            let $ = cheerio.load(response.data);
+            let linkArray = [];
+            let result = {};
+            $(".entry-title").each(function(i, element) {
+                let link = $(this)
+                    .children("a")
+                    .attr("href");
+                if (!linkArray.includes(link)) {
+                    linkArray.push(link);
+                }
+            })
+            // console.log(linkArray);
+            for (let i = 0; i < linkArray.length-1 ; i++) {
+                axios.get(String(linkArray[i])).then(response => {
+                    result.link = linkArray[i];
+                    const $ = cheerio.load(response.data);
+                    result.summary = $(".entry-subtitle").text().trim();
+                    result.title = $("div.entry-container").children("div.entry-main").children(".entry-title").text().trim();
+                    let date= $("div.entry-date").children().text().trim();
+                    if (String(date).includes("Published: ")) {
+                        date = date.split(": ").pop();
+                        console.log(date);
+                    }
+                    result.time = date;
+                    result.img = $("figure.post-thumbnail").children("img").attr("src");
+                    result.source = "Austin Monthly"
                     console.log(result);
                     db.Article.create(result)
                             .then(dbArticle => {
